@@ -20,8 +20,8 @@ export class CreateUserController {
       const body = req.body;
       const response = validate(body);
       // response to return with data appended to the respose payload
-
-      res.status(200).json(response)
+      const status = response?.status === "success" ? 200 : 400;
+      res.status(status).json(response)
     } catch (err) {
       throw new Error(err)
 

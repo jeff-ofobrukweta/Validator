@@ -5,6 +5,7 @@ import cors from 'cors';
 import { environment } from './config/enviroment.config/enviroment.variables';
 import { CreateUserController } from './controllers/createUser/CreateUserController.ts/user.controller';
 import { rateLimiterUsingThirdParty } from './middleware/middleware.throttle';
+import { globalErrorHandler } from './middleware/global.error.handler';
 
 
 class App {
@@ -20,8 +21,10 @@ class App {
     this.app.use(Express.urlencoded({ extended: true }));
     this.app.use(rateLimiterUsingThirdParty)
     this.app.use(cors());
+    this.app.use(globalErrorHandler)
     this.router()
   }
+
 
   private router() {
     this.app.get('/', CreateUserController.getUserDTO);
