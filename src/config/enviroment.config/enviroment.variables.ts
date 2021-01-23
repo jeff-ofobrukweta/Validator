@@ -5,7 +5,7 @@ dotenv.config();
 
 export const environment: Environment = {
   server: {
-    port: Number(process.env.PORT),
+    port: Number(process.env.PORT) || 3000,
   },
   throttling: {
     windowMs: Number(process.env.WINDOWMS), // 24 hrs in milliseconds
