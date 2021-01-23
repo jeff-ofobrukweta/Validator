@@ -1,4 +1,5 @@
 import { condition } from '../payload.types/rules.td';
+import { UserFactory } from '../factory.repository/user.repository';
 
 export type Rule = {
   field: string;
@@ -107,7 +108,57 @@ function createRule(
   return { rule: rawRule as Rule, isSuccess: true };
 }
 
-export function validate(inputValue): ResponseDTO {
+
+export function validate(InputValue) {
+  let { message, status, data } = validateHelper(InputValue);
+
+  const { rule } = InputValue;
+  let validateInputValue = {
+    message,
+    status,
+    data
+  }
+
+  if (data != null && message.includes("failed")) {
+    validateInputValue = {
+      message,
+      status,
+      data: {
+        validation: {
+          error: false,
+          field: rule.field,
+          field_value: formatResponseTypeForSuccessAndFail(rule, data),
+          condition: rule.condition,
+          condition_value: rule.condition_value
+        }
+      }
+    }
+
+    return validateInputValue;
+  }
+  if (data != null && message.includes("successfully")) {
+    validateInputValue = {
+      message,
+      status,
+      data: {
+        validation: {
+          error: false,
+          field: rule.field,
+          field_value: formatResponseTypeForSuccessAndFail(rule, data),
+          condition: rule.condition,
+          condition_value: rule.condition_value
+        }
+      }
+    }
+    return validateInputValue;
+  }
+  return validateInputValue;
+}
+
+
+
+
+export function validateHelper(inputValue): ResponseDTO {
   // validate both rule and data field
 
   if (!inputValue.data && !inputValue.rule) {
@@ -149,16 +200,17 @@ export function validate(inputValue): ResponseDTO {
   //#endregion
 
   if (isConditionMet) {
+
     return {
       message: `field ${rule.field} successfully validated.`,
       status: "success",
-      data: inputValue.data 
+      data: inputValue.data
     };
   } else {
     return {
       message: `field ${rule.field} failed validation.`,
       status: "error",
-      data:inputValue.data
+      data: inputValue.data
     };
   }
 
@@ -181,12 +233,12 @@ function getNestedData(
 
 
 
-export  function formatResponseTypeForSuccessAndFail(rule, data){
+export function formatResponseTypeForSuccessAndFail(rule, data) {
   let nestedCheck = rule.field.split('.');
-  if(nestedCheck.length === 2){
+  if (nestedCheck.length === 2) {
     return data[nestedCheck[0]][nestedCheck[1]]
   }
-  if(nestedCheck.length === 1){
+  if (nestedCheck.length === 1) {
     return data[nestedCheck[0]]
   }
 }

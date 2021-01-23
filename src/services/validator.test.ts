@@ -1,5 +1,4 @@
 import { RequestDTO, validate } from "./validator";
-import { condition } from '../payload.types/rules.td';
 
 test("Correct Validation", () => {
   const correctDTO = {
@@ -24,9 +23,9 @@ test("Correct Validation", () => {
       validation: {
         error: false,
         field: "missions",
-        field_value:30,
-        condition: "gte",
-        condition_value: 30
+        field_value:45,
+        condition:"gte",
+        condition_value:30
       }
     }
   };
@@ -62,7 +61,7 @@ describe("Failed Validation", () => {
               condition_value: 30
           }
       }
-  };
+  }
     expect(response).toEqual(validResponse);
   });
 
@@ -79,6 +78,15 @@ describe("Failed Validation", () => {
     const validResponse = {
       message: "field 0 failed validation.",
       status: "error",
+      data:{
+        validation:{
+          condition:"eq",
+          condition_value:"a",
+          error:false,
+          field:"0",
+          field_value:"d"
+        }
+      }
     };
     expect(response).toEqual(validResponse);
   });
@@ -96,6 +104,7 @@ describe("The rule and data fields are required.", () => {
     const validResponse = {
       message: "rule is required.",
       status: "error",
+      data:null
     };
     expect(response).toEqual(validResponse);
   });
@@ -113,6 +122,7 @@ describe("The rule and data fields are required.", () => {
     const validResponse = {
       message: "data is required.",
       status: "error",
+      data:null
     };
     expect(response).toEqual(validResponse);
   });
@@ -143,6 +153,7 @@ describe("The rule and data fields are required.", () => {
     const validResponse = {
       message: `field should be a string.`,
       status: "error",
+      data:null
     };
     expect(response).toEqual(validResponse);
   })
@@ -156,6 +167,7 @@ describe("The rule and data fields are required.", () => {
     const validResponse = {
       message: "Invalid JSON payload passed.",
       status: "error",
+      data:null
     };
     expect(response).toEqual(validResponse);
   })
@@ -176,6 +188,7 @@ describe("The rule and data fields are required.", () => {
     const validResponse = {
       message: "field data be an array,string,object.",
       status: "error",
+      data:null
     };
 
     expect(response).toEqual(validResponse);
@@ -226,6 +239,7 @@ describe("rule validation", () => {
     const validResponse = {
       message: "rule should be an object.",
       status: "error",
+      data:null
     };
     expect(response).toEqual(validResponse);
   })
@@ -242,6 +256,7 @@ describe("rule validation", () => {
     const validResponse = {
       message: "field is required.",
       status: "error",
+      data: null
     };
     expect(response).toEqual(validResponse);
   });
@@ -258,6 +273,7 @@ describe("rule validation", () => {
     const validResponse = {
       message: "condition is required.",
       status: "error",
+      data:null
     };
     expect(response).toEqual(validResponse);
   });
@@ -275,6 +291,7 @@ describe("rule validation", () => {
     const validResponse = {
       message: "condition is required.",
       status: "error",
+      data:null
     };
     expect(response).toEqual(validResponse);
   });
@@ -291,6 +308,7 @@ describe("rule validation", () => {
     const validResponse = {
       message: "condition_value is required.",
       status: "error",
+      data:null
     };
     expect(response).toEqual(validResponse);
   });
@@ -317,6 +335,7 @@ describe("data validation", () => {
     const validResponse = {
       message: "field 5 is missing from data.",
       status: "error",
+      data:null
     };
     expect(response).toEqual(validResponse);
   });
@@ -340,6 +359,7 @@ describe("data validation", () => {
     const validResponse = {
       message: "field missions is missing from data.",
       status: "error",
+      data:null
     };
     expect(response).toEqual(validResponse);
   });
@@ -368,6 +388,7 @@ describe("data validation", () => {
     const validResponse = {
       message: "field missions.a.b is missing from data.",
       status: "error",
+      data:null
     };
     expect(response).toEqual(validResponse);
   });

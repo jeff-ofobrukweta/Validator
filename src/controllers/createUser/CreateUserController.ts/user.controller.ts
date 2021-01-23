@@ -9,7 +9,6 @@ export class CreateUserController {
     try {
       const { data, status, message } = dummy;
       const response = UserFactory.getDeveloperInfo(message, status, data);
-
       res.status(200).json(response);
     } catch (err) {
       res.status(500).send(err);
@@ -20,10 +19,9 @@ export class CreateUserController {
     try {
       const body = req.body;
       const response = validate(body);
-      const userResponse = UserFactory.getDeveloperInfo(response.message, response.status, response.data, body.rule);
       // response to return with data appended to the respose payload
 
-      res.status(200).json(userResponse)
+      res.status(200).json(response)
     } catch (err) {
       throw new Error(err)
 
