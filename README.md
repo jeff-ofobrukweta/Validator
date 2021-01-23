@@ -6,6 +6,8 @@ A Rule Validator of Data
 ## Requirements
 
 For development, you will only need Node.js 14x and a node global package, Yarn, installed in your environement.
+NB: Use this for base url http://ec2-35-177-100-44.eu-west-2.compute.amazonaws.com:3000
+Routes:  / , /validate-rule
 
 ### Node
 - #### Node installation on Windows
