@@ -10,8 +10,6 @@ export class CreateUserController {
       const { data, status, message } = dummy;
       const response = UserFactory.getDeveloperInfo(message, status, data);
 
-      console.log(">><<><><",response)
-
       res.status(200).json(response);
     } catch (err) {
       res.status(500).send(err);
