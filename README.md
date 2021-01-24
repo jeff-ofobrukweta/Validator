@@ -59,6 +59,10 @@ Open `a/nice/path/to/a.file` then edit it with your settings. You will need:
 ## Running the project
 
     $ yarn start
+    
+## Running the test
+
+    $ yarn test
 
 ## Simple build for production
 
